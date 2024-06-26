@@ -15,7 +15,7 @@ const HomeStackNavigation = (): JSX.Element => (
     <Stack.Screen
       name="MovieDetail"
       component={MovieDetail}
-      options={{ headerShown: false }} // Menghilangkan header di halaman MovieDetail
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 )
