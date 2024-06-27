@@ -10,63 +10,66 @@ const MovieItem = ({ movie, size, coverType }: MovieItemProps): JSX.Element => {
   const pushAction = StackActions.push('MovieDetail', { id: movie.id })
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-      navigation.dispatch(pushAction)
-    }}
-    >
-      <ImageBackground
-        resizeMode="cover"
-        style={[size, styles.backgroundImage]}
-        imageStyle={styles.backgroundImageStyle}
-        source={{
-          uri: `https://image.tmdb.org/t/p/w500${
-            coverType === 'backdrop' ? movie.backdrop_path : movie.poster_path
-          }`,
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.dispatch(pushAction)
         }}
-      >
-        <LinearGradient
-          colors={['#00000000', 'rgba(0, 0, 0, 0.7)']}
-          locations={[0.6, 0.8]}
-          style={styles.gradientStyle}
+       >
+        <ImageBackground
+          resizeMode="cover"
+          style={[size, styles.backgroundImage]}
+          imageStyle={styles.backgroundImageStyle}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500${coverType === 'backdrop' ? movie.backdrop_path : movie.poster_path}`,
+          }}
         >
+          <LinearGradient
+            colors={['#00000000', 'rgba(0, 0, 0, 0.7)']}
+            locations={[0.6, 0.8]}
+            style={styles.gradientStyle}
+          >
           <Text style={styles.movieTitle}>{movie.title}</Text>
-          <TouchableOpacity style={styles.ratingContainer}>
-            <FontAwesome name="star" size={16} color="yellow" />
-            <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
-          </TouchableOpacity>
-        </LinearGradient>
-      </ImageBackground>
-    </TouchableOpacity>
+            <View style={styles.ratingContainer}>
+              <FontAwesome name="star" size={16} color="yellow" />
+              <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
+            </View>
+          </LinearGradient>
+        </ImageBackground>
+      </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+      marginBottom: 10,
+    },
   backgroundImage: {
-    marginRight: 4,
+      marginRight: 4,
   },
   backgroundImageStyle: {
-    borderRadius: 8,
+      borderRadius: 8,
   },
   movieTitle: {
-    color: 'white',
+      color: 'white',
   },
   gradientStyle: {
-    padding: 8,
-    height: '100%',
-    width: '100%',
-    borderRadius: 8,
-    display: 'flex',
-    justifyContent: 'flex-end',
+      padding: 8,
+      height: '100%',
+      width: '100%',
+      borderRadius: 8,
+      display: 'flex',
+      justifyContent: 'flex-end',
   },
   ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 2,
   },
   rating: {
-    color: 'yellow',
-    fontWeight: '700',
+      color: 'yellow',
+      fontWeight: '700',
   },
 })
 
