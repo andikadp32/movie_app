@@ -15,7 +15,6 @@ const HomeStackNavigation = (): JSX.Element => (
     <Stack.Screen
       name="MovieDetail"
       component={MovieDetail}
-      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 )
