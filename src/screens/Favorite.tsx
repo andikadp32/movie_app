@@ -1,103 +1,65 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList} from 'react-native';
+import { View, StyleSheet, SafeAreaView, FlatList, Dimensions } from 'react-native';
+import { Movie } from '../types/app';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { Movie } from '../types/app';
 import MovieItem from '../components/movies/MovieItem';
 
-const Favorite = ({ navigation }: any): JSX.Element => {
-  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
+const win = Dimensions.get("window");
+export default function Favorite(): JSX.Element {
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  const getFavorites = async (): Promise<void> => {
+    try {
+      const initialData: string | null = await AsyncStorage.getItem(
+        "@FavoriteList"
+      );
+
+      let favMovieList: Movie[] = [];
+
+      if (initialData !== null) {
+        favMovieList = JSON.parse(initialData);
+      }
+
+      setMovies(favMovieList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const favoriteList = await AsyncStorage.getItem('@FavoriteList');
-        if (favoriteList) {
-          setFavoriteMovies(JSON.parse(favoriteList));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const unsubscribe = navigation.addListener('focus', fetchFavorites);
-
-    return unsubscribe;
-  }, [navigation]);
+    getFavorites();
+  }, [movies]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
-        data={favoriteMovies}
+        style={{ marginTop: 20 }}
+        data={movies}
         renderItem={({ item }) => (
-          <MovieItem movie={item} size={{ width: 100, height: 160 }} coverType="poster" />
+          <View style={{ marginBottom: 10 }}>
+            <MovieItem
+              movie={item}
+              size={{
+                width: 100,
+                height: 160,
+              }}
+              coverType={"poster"}
+            />
+          </View>
         )}
-        keyExtractor={(item) => item.id.toString()}
         numColumns={3}
-        contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.id.toString()}
       />
-    </View>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
+    width: win.width,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  movieTitle: {
-    fontSize: 18,
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  list: {
-    alignItems: 'center',
-  },
-  itemContainer: {
-    margin: 5,
-  },
-  poster: {
-    width: 100,
-    height: 150,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  gradient: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    padding: 10,
-  },
-  textContainer: {
-    width: '100%',
-  },
-  imageText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 5,
-  },
-  rating: {
-    color: 'yellow',
-    fontWeight: '700',
-    marginLeft: 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
-
-export default Favorite;

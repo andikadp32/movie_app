@@ -2,7 +2,6 @@ export interface MovieListProps {
   title: string
   path: string
   coverType: 'poster' | 'backdrop'
-  movies?: Movie[]
 }
 
 export interface MovieItemProps {
@@ -26,23 +25,32 @@ export interface Movie {
     logo_path: string
     name: string
     origin_country: string
-  }[]
+  };
   production_countries: {
     iso_3166_1: string
     name: string
-  }[]
-  release_date: string
+  };
+  release_date: Date;
   revenue: number
   runtime: number
   spoken_languages: {
     english_name: string
     iso_639_1: string
     name: string
-  }[]
+  };
   status: string
   tagline: string
   title: string
   video: boolean
   vote_average: number
   vote_count: number
+}
+
+export interface Genre {
+  genres: GenreElement[];
+}
+
+export interface GenreElement {
+  id: number;
+  name: string;
 }

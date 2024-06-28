@@ -5,18 +5,21 @@ import MovieDetail from '../screens/MovieDetail'
 
 const Stack = createNativeStackNavigator()
 
-const HomeStackNavigation = (): JSX.Element => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Home"
-      component={Home}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen
-      name="MovieDetail"
-      component={MovieDetail}
-    />
-  </Stack.Navigator>
-)
+function HomeStackNavigation(): JSX.Element {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="home"
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="movieDetail"
+        component={MovieDetail}
+        options={{ headerBackVisible: true, headerTitle: "Detail" }}
+      />
+    </Stack.Navigator>
+  )
+}
 
 export default HomeStackNavigation
