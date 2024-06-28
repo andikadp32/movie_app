@@ -167,7 +167,7 @@ export default function MovieDetail({ route }: any): JSX.Element {
               >
                 <FontAwesome
                   name={isFavorite ? "heart" : "heart-o"}
-                  size={16}
+                  size={20}
                   color="pink"
                 />
               </TouchableOpacity>
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingHorizontal: 10,
     textAlign: "justify",
+    fontSize: 16,
   },
   factTitle: {
     paddingTop: 10,
@@ -230,6 +231,7 @@ const styles = StyleSheet.create({
   },
   movieTitle: {
     color: "white",
+    fontSize: 25,
   },
   gradientStyle: {
     padding: 8,

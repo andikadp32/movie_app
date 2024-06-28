@@ -15,14 +15,12 @@ const coverImageSize = {
   },
 }
 
-const MovieList = ({ title, path, coverType, movies: initialMovies }: MovieListProps & { movies?: Movie[] }): JSX.Element => {
-  const [movies, setMovies] = useState<Movie[]>(initialMovies ?? [])
+function MovieList({ title, path, coverType }: MovieListProps): JSX.Element {
+  const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    if (!initialMovies) {
-      getMovieList()
-    }
-  }, [path])
+    getMovieList()
+  }, [])
 
   const getMovieList = (): void => {
     const url = `https://api.themoviedb.org/3/${path}`
@@ -43,8 +41,6 @@ const MovieList = ({ title, path, coverType, movies: initialMovies }: MovieListP
         console.log(errorResponse)
       })
   }
-
-  console.log(movies)
 
   return (
     <View>

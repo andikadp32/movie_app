@@ -26,7 +26,7 @@ const movieLists: MovieListProps[] = [
   },
 ]
 
-const Home = (): JSX.Element => {
+export default function Home(): JSX.Element {
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -52,5 +52,3 @@ const styles = StyleSheet.create({
     rowGap: 16,
   },
 })
-
-export default Home
